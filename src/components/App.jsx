@@ -1,5 +1,5 @@
 import VideoList from './VideoList.js';
-import VideoPlayer from './VideoPlayer.js'
+import VideoPlayer from './VideoPlayer.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 
 var App = () => (
