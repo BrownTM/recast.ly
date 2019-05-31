@@ -8,9 +8,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videos: exampleVideoData,
+      videos: [],
       currentVideo: exampleVideoData[0]
     };
+  }
+  //STOPPING HERE
+  //can we set currentVideo default to one of the example videos and see if that works temporarily
+  //start from here on Saturday to try and get initial currentVideo to not error?
+  componentDidMount() {
+    this.getVideos('react');
   }
 
   changeCurrentVideo(video) {
@@ -19,14 +25,17 @@ class App extends React.Component {
     });
   }
 
-  dummy() {
+  getVideos(query) {
     var options = {
-      query: 'dog',
+      query: query,
       max: 5,
       key: YOUTUBE_API_KEY
     };
     var callback = (results) => {
-      console.log(results);
+      this.setState({
+        videos: results,
+        currentVideo: results[0]
+      });
     };
     searchYouTube(options, callback);
   }
