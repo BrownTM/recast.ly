@@ -1,19 +1,38 @@
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import YOUTUBE_API_KEY from '../config/youtube.js';
-import exampleVideoData from '../data/exampleVideoData.js';
+import Search from './Search.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       videos: [],
-      currentVideo: {}
+      currentVideo: {},
+      searchInput: '',
+      delayTimer: undefined
     };
   }
 
   componentDidMount() {
     this.getVideos('react tutorials');
+  }
+
+  setSearchInput(str) {
+    this.setState({
+      searchInput: str
+    });
+    this.getSearchedVideos(this.state.searchInput);
+  }
+
+  getSearchedVideos(str) {
+    clearTimeout(this.state.delayTimer);
+    var delay = this.getVideos.bind(this);
+    this.setState({
+      delayTimer: setTimeout(function() {
+        delay(str);
+      }, 500)
+    });
   }
 
   changeCurrentVideo(video) {
@@ -42,7 +61,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div onClick={this.dummy}><h5><em>search</em> view goes here</h5></div>
+            <div><Search getInput={this.setSearchInput.bind(this)}/></div>
           </div>
         </nav>
         <div className="row">
